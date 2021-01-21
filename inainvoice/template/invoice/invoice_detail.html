@@ -1,0 +1,67 @@
+{% extends 'frame/base.html' %}
+
+{% block title %}{{ invoice.serial_num}} - {{ invoice.title }}{% endblock %}
+
+{% block content %}
+<section id="about">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <h2>請款單 {{ invoice.serial_num}} - {{ invoice.title }} 詳細資料</h2>
+                <p>{{ invoice.update_time }} 更新, {{ invoice.creat_time }} 建立</p>
+            </div>
+        </div>
+        <div class-="row">
+            <div class="col-lg-10 mx-auto mb-3">
+                <a href=" {% url 'InvoiceUpdate' invoice.id %} " class="btn btn-outline-primary btn-sm" role="button">編輯</a>
+                <a href=" {% url 'InvoiceDelete' invoice.id %} " class="btn btn-outline-danger btn-sm" role="button">刪除</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <th scope="row">請款單號</th>
+                            <td colspan="5">{{ invoice.serial_num }}</td>
+                            <th scope="row">編輯完成</th>
+                            {% if invoice.is_completed %}
+                                <td>已完成</td>
+                                {% else %}
+                                <td>未完成</td>
+                            {% endif %}
+                        </tr>
+                        <tr>
+                            <th scope="row">請款單位</th>
+                            <td colspan="5">{{ invoice.request_unit.name }}</td>
+                            <th scope="row">請款日期</th>
+                            <td>{{ invoice.filldate }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">主旨</th>
+                            <td colspan="7">{{ invoice.title }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">事由</th>
+                            <td colspan="7">{{ invoice.purpose }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">給付廠商</th>
+                            <td colspan="3">{{ invoice.pay_comp }}</td>
+                            <th scope="row">付款條件</th>
+                            <td>{{ invoice.pay_methold }}</td>
+                            <th scope="row">預計付款日</th>
+                            <td>{{ invoice.pay_date }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">備註</th>
+                            <td colspan="7">{{ invoice.remark }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

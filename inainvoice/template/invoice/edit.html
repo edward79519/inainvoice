@@ -1,0 +1,86 @@
+{% extends 'frame/base.html' %}
+
+{% block title %}編輯 - INA Energy{% endblock %}
+
+{% block content %}
+  <section>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-11">
+          <h2>編輯請款單 - {{ invoice.serial_num }}</h2>
+        </div>
+      </div>
+      <form class="was-validated" action="" method="POST">
+        {% csrf_token %}
+        <div class="form-row mb-3">
+          <div class="col-lg-4">
+            <label for="{{ form.request_unit.name }}">請款單位</label>
+            {{ form.request_unit }}
+          </div>
+          <div class="col-lg-5">
+          </div>
+          <div class="col-lg-3">
+            <label for="">單號</label>
+            <h5>{{ invoice.serial_num }}</h5>
+          </div>
+        </div>
+        <div class="form-row mb-3">
+          <div class=col-lg-6>
+            <label for="{{ form.title.name }}">主旨</label>
+            {{ form.title }}
+          </div>
+          <div class=col-lg-3>
+            <label for="{{ form.employee.name }}">請款人</label>
+            {{ form.employee }}
+          </div>
+          <div class=col-lg-3>
+            <label for="{{ form.filldate.name }}">請款日期</label>
+            {{ form.filldate }}
+          </div>
+        </div>
+        <div class="form-row mb-3">
+          <div class="col-lg-12">
+            <label for="{{ form.purpose.name }}">事由</label>
+            {{ form.purpose }}
+          </div>
+        </div>
+        <div class="form-row mb-3">
+          <div class="col-lg-6">
+            <label for="{{ form.pay_comp.name }}">給付廠商</label>
+            {{ form.pay_comp }}
+          </div>
+          <div class="col-lg-3">
+            <label for="{{ form.pay_methold.name }}">付款條件</label>
+            {{ form.pay_methold }}
+          </div>
+          <div class="col-lg-3">
+            <label for="{{ form.pay_date.name }}">預計付款日期</label>
+            {{ form.pay_date }}
+          </div>
+        </div>
+        <div class="form-row mb-3">
+          <div class="col-lg-12">
+            <label for="{{ form.remark.name }}">備註</label>
+            {{ form.remark }}
+          </div>
+
+        </div>
+        <div class="form-row mb-3">
+          <div class="col-lg-12">
+            <div class="custom-control custom-checkbox">
+              {{ form.is_completed }}
+              <label class="custom-control-label" for="id_{{ form.is_completed.name }}">是否已完成</label>
+            </div>
+          </div>
+        </div>
+        <div class="form-row mb-3">
+          <div class="col-lg-12">
+            <input class="btn btn-outline-primary" type="reset" value="清除輸入">
+            <button class="btn btn-primary" type="submit">儲存</button>
+
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
+{% endblock %}

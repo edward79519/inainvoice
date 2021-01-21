@@ -1,0 +1,45 @@
+{% extends 'frame/base.html' %}
+
+{% block title %}請款單一覽 - INA Energy{% endblock %}
+
+{% block content %}
+  <section>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-11 mx-auto table-responsive-xl">
+          <h2>請款單一覽</h2>
+          <div class="mb-3">
+            <a href="add/" class="btn btn-primary">Add</a>
+          </div>
+          {% if invoice_list %}
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">單號</th>
+                <th scope="col">標題</th>
+                <th scope="col">申請日期</th>
+                <th scope="col">申請人</th>
+                <th scope="col">動作</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for invoice in invoice_list%}
+              <tr>
+                <th scope="row">{{ invoice.serial_num }}</th>
+                <td><a href="{{ invoice.id }}">{{ invoice.title }}</a></td>
+                <td>{{ invoice.filldate }}</td>
+                <td>{{ invoice.employee }}</td>
+                <td></td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          {% else %}
+          <p>目前沒有資料！</p>
+          <p></p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

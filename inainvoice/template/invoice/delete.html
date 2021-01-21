@@ -1,0 +1,41 @@
+{% extends 'frame/base.html' %}
+
+{% block title %}刪除 - INA Energy{% endblock %}
+
+{% block content %}
+<section>
+    <div class="container">
+        <h2>確定刪除 {{invoice.serial_num }} - {{ invoice.title }}？ </h2>
+        <div class="row">
+            <div class="col-lg-3">
+                <table class="table table-borderless">
+                    <tbody>
+                        <tr>
+                            <th scope="row">單號</th>
+                            <td>{{ invoice.serial_num }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">主旨</th>
+                            <td>{{ invoice.title }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">申請人</th>
+                            <td>{{ invoice.employee }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row"></th>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <input class="btn btn-outline-primary" name="Submit" type="button" id="Submit" onClick="javascript:history.back(1)" value="取消"/>
+                    <input class="btn btn-danger" type="submit" value="確定刪除" />
+                </form>
+
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
