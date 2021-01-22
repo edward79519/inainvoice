@@ -3,6 +3,7 @@
 {% block title %}{{ invoice.serial_num}} - {{ invoice.title }}{% endblock %}
 
 {% block content %}
+
 <section id="about">
     <div class="container">
         <div class="row">
@@ -22,24 +23,26 @@
                 <table class="table table-bordered">
                     <tbody>
                         <tr>
-                            <th scope="row">請款單號</th>
-                            <td colspan="5">{{ invoice.serial_num }}</td>
-                            <th scope="row">編輯完成</th>
+                            <th scope="row" width="10%">請款單號</th>
+                            <td colspan="5" width="45%">{{ invoice.serial_num }}</td>
+                            <th scope="row" width="10%">編輯狀態</th>
                             {% if invoice.is_completed %}
-                                <td>已完成</td>
+                                <td width="20%">已完成</td>
                                 {% else %}
-                                <td>未完成</td>
+                                <td width="20%">未完成</td>
                             {% endif %}
                         </tr>
                         <tr>
                             <th scope="row">請款單位</th>
                             <td colspan="5">{{ invoice.request_unit.name }}</td>
                             <th scope="row">請款日期</th>
-                            <td>{{ invoice.filldate }}</td>
+                            <td>{{ invoice.filldate.year }}年{{ invoice.filldate.month }}月{{ invoice.filldate.day }}日</td>
                         </tr>
                         <tr>
                             <th scope="row">主旨</th>
-                            <td colspan="7">{{ invoice.title }}</td>
+                            <td colspan="5">{{ invoice.title }}</td>
+                            <th scope="row">總金額</th>
+                            <td>新台幣 {{ total_amount }} 元</td>
                         </tr>
                         <tr>
                             <th scope="row">事由</th>
@@ -47,11 +50,11 @@
                         </tr>
                         <tr>
                             <th scope="row">給付廠商</th>
-                            <td colspan="3">{{ invoice.pay_comp }}</td>
-                            <th scope="row">付款條件</th>
+                            <td colspan="3" width="40%">{{ invoice.pay_comp }}</td>
+                            <th scope="row" width="10%">付款條件</th>
                             <td>{{ invoice.pay_methold }}</td>
-                            <th scope="row">預計付款日</th>
-                            <td>{{ invoice.pay_date }}</td>
+                            <th scope="row">預計付款</th>
+                            <td>{{ invoice.pay_date.year }}年{{ invoice.pay_date.month }}月{{ invoice.pay_date.day }}日</td>
                         </tr>
                         <tr>
                             <th scope="row">備註</th>
@@ -59,6 +62,65 @@
                         </tr>
                     </tbody>
                 </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <h3>請款項目</h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col" style="width: 45%">項目</th>
+                            <th scope="col">備註</th>
+                            <th scope="col" style="width: 20%">金額</th>
+                            <th scope="col" style="width: 10%">動作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if invoiceitem %}
+                            {% for item in invoiceitem %}
+                            <tr>
+                                <td>{{ item.item_name }}</td>
+                                <td>{{ item.remark }}</td>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-3">NT.</div>
+                                        <div class="col-9 text-right">{{ item.amount }}</div>
+                                    </div>
+                                </td>
+                                <td><a href=" {% url 'ItemDelete' invoice.id item.id %} " class="btn btn-outline-danger btn-sm" role="button">刪除</a></td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="3">沒有資料</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                    <tfoot>
+                    {% if not invoice.is_completed %}
+                            <form class="was-validated" action="" method="POST">
+                            {% csrf_token %}
+                                <tr>
+                                    <input type="hidden" value="{{ invoice.id }}" name="invoice_sn" id="id_invoice_sn">
+                                    <td>{{ form.item_name }}</td>
+                                    <td>{{ form.remark }}</td>
+                                    <td>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">NT</span>
+                                            </div>
+                                            {{ form.amount }}
+                                        </div>
+
+                                    </td>
+                                    <td><button class="btn btn-primary btn-sm" type="submit">新增</button></td>
+                                </tr>
+                            </form>
+                    {% endif %}
+                    </tfoot>
+                </table>
+
             </div>
         </div>
     </div>

@@ -51,5 +51,13 @@ class Invoice(models.Model):
     def __str__(self):
         return self.serial_num + '_' +self.title
 
+class InvoiceItem(models.Model):
+    invoice_sn = models.ForeignKey(
+        Invoice,
+        on_delete=models.PROTECT,
+    )
+    item_name = models.CharField(max_length=100)
+    remark = models.CharField(max_length=50, default="N/A")
+    amount = models.DecimalField(max_digits=10, decimal_places=0)
 
 

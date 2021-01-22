@@ -1,5 +1,5 @@
 from django import forms
-from .models import Invoice
+from .models import Invoice, InvoiceItem
 from django.utils import timezone
 
 class InvoiceAddModelForm(forms.ModelForm):
@@ -42,4 +42,16 @@ class InvoiceUpdateModelForm(forms.ModelForm):
             'pay_date': forms.DateInput(attrs={'class': 'form-control is-valid', 'type': 'date'}),
             'remark': forms.Textarea(attrs={'class': 'form-control is-valid'}),
             'is_completed': forms.CheckboxInput(attrs={'class': 'custom-control-input'})
+        }
+
+class InvoiceItemAddModelForm(forms.ModelForm):
+
+    class Meta:
+        model = InvoiceItem
+        fields = '__all__'
+        widgets = {
+            'invoice_sn': forms.NumberInput(),
+            'item_name': forms.TextInput(attrs={'class': 'form-control is-valid'}),
+            'remark': forms.TextInput(attrs={'class': 'form-control is-valid'}),
+            'amount': forms.NumberInput(attrs={'class': 'form-control is-valid'}),
         }
