@@ -9,13 +9,18 @@
         <div class="row">
             <div class="col-lg-10 mx-auto">
                 <h2>請款單 {{ invoice.serial_num}} - {{ invoice.title }} 詳細資料</h2>
-                <p>{{ invoice.update_time }} 更新, {{ invoice.creat_time }} 建立</p>
+                <p class="d-print-none">{{ invoice.update_time }} 更新, {{ invoice.creat_time }} 建立</p>
+                {% if invoice.is_completed %}
+                <p><a href="javascript:window.print()" class="btn btn-outline-primary btn-sm d-print-none" role="button">列印</a></p>
+                {% endif %}
             </div>
         </div>
         <div class-="row">
             <div class="col-lg-10 mx-auto mb-3">
+                {% if not invoice.is_completed %}
                 <a href=" {% url 'InvoiceUpdate' invoice.id %} " class="btn btn-outline-primary btn-sm" role="button">編輯</a>
                 <a href=" {% url 'InvoiceDelete' invoice.id %} " class="btn btn-outline-danger btn-sm" role="button">刪除</a>
+                {% endif %}
             </div>
         </div>
         <div class="row">
@@ -26,11 +31,13 @@
                             <th scope="row" width="10%">請款單號</th>
                             <td colspan="5" width="45%">{{ invoice.serial_num }}</td>
                             <th scope="row" width="10%">編輯狀態</th>
-                            {% if invoice.is_completed %}
-                                <td width="20%">已完成</td>
+                            <td width="20%">
+                                {% if invoice.is_completed %}
+                                已完成
                                 {% else %}
-                                <td width="20%">未完成</td>
-                            {% endif %}
+                                未完成
+                                {% endif %}
+                            </td>
                         </tr>
                         <tr>
                             <th scope="row">請款單位</th>
@@ -56,7 +63,7 @@
                             <th scope="row">預計付款</th>
                             <td>{{ invoice.pay_date.year }}年{{ invoice.pay_date.month }}月{{ invoice.pay_date.day }}日</td>
                         </tr>
-                        <tr>
+                        <tr class="d-print-none">
                             <th scope="row">備註</th>
                             <td colspan="7">{{ invoice.remark }}</td>
                         </tr>
@@ -67,13 +74,13 @@
         <div class="row">
             <div class="col-lg-10 mx-auto">
                 <h3>請款項目</h3>
-                <table class="table">
+                <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th scope="col" style="width: 45%">項目</th>
-                            <th scope="col">備註</th>
-                            <th scope="col" style="width: 20%">金額</th>
-                            <th scope="col" style="width: 10%">動作</th>
+                            <th scope="col" >品項</th>
+                            <th scope="col" style="width: 15%" class="d-print-none">備註</th>
+                            <th scope="col" style="width: 25%">金額</th>
+                            <th scope="col" style="width: 10%" class="d-print-none">動作</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -81,23 +88,28 @@
                             {% for item in invoiceitem %}
                             <tr>
                                 <td>{{ item.item_name }}</td>
-                                <td>{{ item.remark }}</td>
+                                <td class="d-print-none">{{ item.remark }}</td>
                                 <td>
                                     <div class="row">
                                         <div class="col-3">NT.</div>
                                         <div class="col-9 text-right">{{ item.amount }}</div>
                                     </div>
                                 </td>
-                                <td><a href=" {% url 'ItemDelete' invoice.id item.id %} " class="btn btn-outline-danger btn-sm" role="button">刪除</a></td>
+                                <td class="d-print-none">
+                                    {% if not invoice.is_completed %}
+                                    <a href=" {% url 'ItemDelete' invoice.id item.id %} " class="btn btn-outline-danger btn-sm" role="button">刪除</a>
+                                    {% endif %}
+                                </td>
                             </tr>
                             {% endfor %}
                         {% else %}
                             <tr>
-                                <td colspan="3">沒有資料</td>
+                                <td colspan="4">沒有資料</td>
                             </tr>
                         {% endif %}
                     </tbody>
                     <tfoot>
+                    {% if user.is_authenticated %}
                     {% if not invoice.is_completed %}
                             <form class="was-validated" action="" method="POST">
                             {% csrf_token %}
@@ -118,9 +130,53 @@
                                 </tr>
                             </form>
                     {% endif %}
+                    {% endif %}
                     </tfoot>
                 </table>
 
+            </div>
+        </div>
+        <div class="row d-none d-print-block">
+            <div class="col">
+                <h3>簽核</h3>
+                <table class="table table-bordered text-center">
+                    <thead>
+                        <tr>
+                            <th width="20%">董事長</th>
+                            <th width="20%">總經理</th>
+                            <th width="20%">副總經理</th>
+                            <th width="20%">初核</th>
+                            <th width="20%">經辦人</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td height="70"></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+                </table>
+                <h3>會簽財務</h3>
+                <table class="table table-bordered text-center">
+                    <thead>
+                        <tr>
+                            <th width="33%">審核</th>
+                            <th width="33%">覆核</th>
+                            <th width="33%">經辦</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td height="70"></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

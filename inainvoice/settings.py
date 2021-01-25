@@ -26,7 +26,7 @@ SECRET_KEY = '=i@h(61u3-my#ovr(mz-__7f%kzx0868bxla5h6oz$p$yel6mo'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -126,3 +126,5 @@ STATIC_ROOT = os.path.join(BASE_DIR, "inainvoice/static_root/")
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "inainvoice/static/")
 ]
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'

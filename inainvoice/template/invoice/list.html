@@ -9,17 +9,19 @@
         <div class="col-lg-11 mx-auto table-responsive-xl">
           <h2>請款單一覽</h2>
           <div class="mb-3">
+            {% if user.is_authenticated %}
             <a href="add/" class="btn btn-primary">Add</a>
+            {% endif %}
           </div>
           {% if invoice_list %}
           <table class="table table-hover">
             <thead>
               <tr>
-                <th scope="col">單號</th>
+                <th scope="col" width="15%">單號</th>
                 <th scope="col">標題</th>
                 <th scope="col">申請日期</th>
                 <th scope="col">申請人</th>
-                <th scope="col">動作</th>
+                <th scope="col" width="10%">編輯</th>
               </tr>
             </thead>
             <tbody>
@@ -29,7 +31,13 @@
                 <td><a href="{{ invoice.id }}">{{ invoice.title }}</a></td>
                 <td>{{ invoice.filldate }}</td>
                 <td>{{ invoice.employee }}</td>
-                <td></td>
+                <td>
+                  {% if invoice.is_completed %}
+                    已完成
+                  {% else %}
+                    未完成
+                  {% endif %}
+                </td>
               </tr>
               {% endfor %}
             </tbody>

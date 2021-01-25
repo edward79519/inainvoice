@@ -54,7 +54,7 @@ class Invoice(models.Model):
 class InvoiceItem(models.Model):
     invoice_sn = models.ForeignKey(
         Invoice,
-        on_delete=models.PROTECT,
+        on_delete=models.CASCADE,
     )
     item_name = models.CharField(max_length=100)
     remark = models.CharField(max_length=50, default="N/A")

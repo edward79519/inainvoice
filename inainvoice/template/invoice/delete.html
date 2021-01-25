@@ -5,7 +5,7 @@
 {% block content %}
 <section>
     <div class="container">
-        <h2>確定刪除 {{invoice.serial_num }} - {{ invoice.title }}？ </h2>
+        <h2>確定刪除採購單： {{invoice.serial_num }} - {{ invoice.title }}？ </h2>
         <div class="row">
             <div class="col-lg-6">
                 <table class="table table-borderless">
@@ -13,6 +13,10 @@
                         <tr>
                             <th scope="row">單號</th>
                             <td>{{ invoice.serial_num }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">申請日期</th>
+                            <td>{{ invoice.filldate.year }}年{{ invoice.filldate.month }}月{{ invoice.filldate.day }}日</td>
                         </tr>
                         <tr>
                             <th scope="row">主旨</th>

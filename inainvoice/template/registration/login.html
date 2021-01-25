@@ -1,0 +1,70 @@
+{% extends 'frame/base.html' %}
+
+{% block title%}Login{% endblock %}
+
+{% block content %}
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div  class="col-lg-8 mx-auto">
+                <h2>登入</h2>
+                {% if form.errors %}
+                <p>帳號密碼錯誤，請重新輸入。</p>
+                {% endif %}
+
+                {% if next %}
+                    {% if user.is_authenticated %}
+                        <p>Your account doesn't have access to this page. To proceed,
+                        please login with an account that has access.</p>
+                    {% else %}
+                        <p>請登入以繼續操作。</p>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <form class="was-validated" method="post" action="{% url 'login' %}">
+                {% csrf_token %}
+
+                <div class="form-row">
+                    <div class="col-md-12 mb-3">
+                        <label for="{{ form.username.name }}">{{ form.username.label_tag }}</label>
+                        {{ form.username }}
+                        <div class="invalid-feedback">
+                            Please enter a Username.
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-row">
+                    <div class="col-md-12 mb-3">
+                        <label for="{{ form.password.name }}">{{ form.password.label_tag }}</label>
+                        {{ form.password }}
+                        <div class="invalid-feedback">
+                            Please enter a Password.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-12 mb-3">
+                        <p>
+                            <input class="btn btn-primary" type="submit" value="LogIn">
+                            <a class="btn btn-secondary" href="#" role="button">SignUp</a>
+                            <input class="btn btn-outline-primary" type="hidden" name="next" value="{{ next }}">
+                            {# Assumes you setup the password_reset view in your URLconf #}
+                            <a href="{% url 'password_reset' %}">Lost password?</a>
+                        </p>
+                    </div>
+                </div>
+            </form>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}
