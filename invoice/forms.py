@@ -29,7 +29,7 @@ class InvoiceUpdateModelForm(forms.ModelForm):
 
     class Meta:
         model = Invoice
-        exclude = ['serial_num', 'is_approved', 'is_valid']
+        exclude = ['serial_num', 'is_completed', 'is_approved', 'is_valid']
         widgets = {
             'employee': forms.TextInput(attrs={'class': 'form-control is-valid'}),
             'title': forms.TextInput(attrs={'class': 'form-control is-valid'}),
@@ -39,7 +39,6 @@ class InvoiceUpdateModelForm(forms.ModelForm):
             'pay_methold': forms.Select(attrs={'class': 'custom-select'}),
             'pay_date': forms.DateInput(attrs={'class': 'form-control is-valid', 'type': 'date'}),
             'remark': forms.Textarea(attrs={'class': 'form-control is-valid'}),
-            'is_completed': forms.CheckboxInput(attrs={'class': 'custom-control-input'})
         }
 
 class InvoiceItemAddModelForm(forms.ModelForm):

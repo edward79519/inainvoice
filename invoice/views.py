@@ -90,3 +90,8 @@ def invoiveitem_delete(request, invoice_id, item_id):
     item.delete()
     return redirect("/invoice/" + str(invoice_id) + "/")
 
+@login_required
+def invoice_complete(request, invoice_id):
+    invoice = Invoice.objects.filter(pk=invoice_id)
+    invoice.update(is_completed=True)
+    return redirect("/invoice/" + str(invoice_id) + "/")

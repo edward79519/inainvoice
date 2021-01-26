@@ -21,6 +21,8 @@
                 {% if not invoice.is_completed %}
                 <a href=" {% url 'InvoiceUpdate' invoice.id %} " class="btn btn-outline-primary btn-sm" role="button">編輯</a>
                 <a href=" {% url 'InvoiceDelete' invoice.id %} " class="btn btn-outline-danger btn-sm" role="button">刪除</a>
+                <!--<a href=" {% url 'InvoiceComplete' invoice.id %} " class="btn btn-outline-success btn-sm" role="button">編輯完成</a>-->
+                <a href=" {% url 'InvoiceComplete' invoice.id %} " class="btn btn-outline-success btn-sm" role="button" data-toggle="modal" data-target="#deleteModal">編輯完成</a>
                 {% endif %}
             </div>
         </div>
@@ -30,7 +32,9 @@
                     <tbody>
                         <tr>
                             <th scope="row">請款單號</th>
-                            <td colspan="5">{{ invoice.serial_num }}</td>
+                            <td colspan="3">{{ invoice.serial_num }}</td>
+                            <th scope="row">申請人</th>
+                            <td>{{ invoice.employee }}</td>
                             <th scope="row">編輯狀態</th>
                             <td>
                                 {% if invoice.is_completed %}
@@ -57,6 +61,11 @@
                                 </div>
                             </td>
                         </tr>
+                        <tr class="d-none d-print-table-row">
+                            <th colspan="7">項目</th>
+                            <th>金額</th>
+                        </tr>
+                        {% if invoiceitem %}
                         {% for item in invoiceitem %}
                         <tr class="d-none d-print-table-row">
                             <td colspan="7">{{ item.item_name }}</td>
@@ -68,6 +77,11 @@
                             </td>
                         </tr>
                         {% endfor %}
+                        {% else %}
+                        <tr class="d-none d-print-table-row">
+                            <td colspan="8">沒有資料。</td>
+                        </tr>
+                        {% endif %}
                         <tr>
                             <th scope="row" width="10%">給付廠商</th>
                             <td colspan="3" width="30%">{{ invoice.pay_comp }}</td>
@@ -183,4 +197,24 @@
     </div>
 </section>
 
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">確定完成表單？</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <p>完成後即無法繼續編輯表單，確定要完成？</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-success" onclick="location.href='{% url 'InvoiceComplete' invoice.id %}'">確定</button>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
