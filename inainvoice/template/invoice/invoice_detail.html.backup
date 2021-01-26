@@ -1,5 +1,4 @@
 {% extends 'frame/base.html' %}
-{% load invoice_extra %}
 
 {% block title %}{{ invoice.serial_num}} - {{ invoice.title }}{% endblock %}
 
@@ -9,8 +8,8 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-10 mx-auto">
-                <h2>請款單 {{ invoice.serial_num}} - {{ invoice.title }}</h2>
-                <p class="d-print-none">{{ invoice.update_time|date:"Y年m月d日 H:i" }} 更新, {{ invoice.creat_time|date:"Y年m月d日 H:i" }} 建立</p>
+                <h2>請款單 {{ invoice.serial_num}} - {{ invoice.title }} 詳細資料</h2>
+                <p class="d-print-none">{{ invoice.update_time }} 更新, {{ invoice.creat_time }} 建立</p>
                 {% if invoice.is_completed %}
                 <p><a href="javascript:window.print()" class="btn btn-outline-primary btn-sm d-print-none" role="button">列印</a></p>
                 {% endif %}
@@ -29,10 +28,10 @@
                 <table class="table table-bordered">
                     <tbody>
                         <tr>
-                            <th scope="row">請款單號</th>
-                            <td colspan="5">{{ invoice.serial_num }}</td>
-                            <th scope="row">編輯狀態</th>
-                            <td>
+                            <th scope="row" width="10%">請款單號</th>
+                            <td colspan="5" width="45%">{{ invoice.serial_num }}</td>
+                            <th scope="row" width="10%">編輯狀態</th>
+                            <td width="20%">
                                 {% if invoice.is_completed %}
                                 已完成
                                 {% else %}
@@ -50,31 +49,15 @@
                             <th scope="row">主旨</th>
                             <td colspan="5">{{ invoice.title }}</td>
                             <th scope="row">總金額</th>
-                            <td>
-                                <div class="row">
-                                        <div class="col-5">新台幣</div>
-                                        <div class="col-7 text-right">{{ total_amount }} 元整</div>
-                                </div>
-                            </td>
+                            <td>新台幣 {{ total_amount }} 元</td>
                         </tr>
-                        {% for item in invoiceitem %}
-                        <tr class="d-none d-print-table-row">
-                            <td colspan="7">{{ item.item_name }}</td>
-                            <td colspan="1">
-                                <div class="row">
-                                    <div class="col-3">NT.</div>
-                                    <div class="col-9 text-right">{{ item.amount|moneycent }} 元</div>
-                                </div>
-                            </td>
-                        </tr>
-                        {% endfor %}
                         <tr>
-                            <th scope="row" width="10%">給付廠商</th>
-                            <td colspan="3" width="30%">{{ invoice.pay_comp }}</td>
+                            <th scope="row">給付廠商</th>
+                            <td colspan="3" width="40%">{{ invoice.pay_comp }}</td>
                             <th scope="row" width="10%">付款條件</th>
-                            <td width="10%">{{ invoice.pay_methold }}</td>
-                            <th scope="row" width="10%">預計付款</th>
-                            <td width="22%">{{ invoice.pay_date.year }}年{{ invoice.pay_date.month }}月{{ invoice.pay_date.day }}日</td>
+                            <td>{{ invoice.pay_methold }}</td>
+                            <th scope="row">預計付款</th>
+                            <td>{{ invoice.pay_date.year }}年{{ invoice.pay_date.month }}月{{ invoice.pay_date.day }}日</td>
                         </tr>
                         <tr class="d-print-none">
                             <th scope="row">備註</th>
@@ -84,7 +67,7 @@
                 </table>
             </div>
         </div>
-        <div class="row d-print-none">
+        <div class="row">
             <div class="col-lg-10 mx-auto">
                 <h3>請款項目</h3>
                 <table class="table table-bordered">
@@ -103,7 +86,7 @@
                                 <td>
                                     <div class="row">
                                         <div class="col-3">NT.</div>
-                                        <div class="col-9 text-right">{{ item.amount|moneycent }} 元</div>
+                                        <div class="col-9 text-right">{{ item.amount }}</div>
                                     </div>
                                 </td>
                                 <td class="d-print-none">

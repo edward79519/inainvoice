@@ -11,7 +11,7 @@ class RequestUnitAdmin(admin.ModelAdmin):
     list_display = ('id', 'short_name', 'name')
 
 class InvoiceItemAdmin(admin.ModelAdmin):
-    list_display = ('id', 'invoice_sn', "item_name", "remark", 'amount')
+    list_display = ('id', 'invoice_sn', "item_name", 'amount')
 
 admin.site.register(Invoice, InvoiceAdmin)
 admin.site.register(RequestUnit, RequestUnitAdmin)

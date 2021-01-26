@@ -26,7 +26,6 @@ class Invoice(models.Model):
     serial_num = models.CharField(max_length=15)
     employee = models.CharField(max_length=20)
     title = models.CharField(max_length=100)
-    purpose = models.CharField(max_length=200)
     filldate = models.DateField(
         default=timezone.now()
     )
@@ -57,7 +56,6 @@ class InvoiceItem(models.Model):
         on_delete=models.CASCADE,
     )
     item_name = models.CharField(max_length=100)
-    remark = models.CharField(max_length=50, default="N/A")
     amount = models.DecimalField(max_digits=10, decimal_places=0)
 
 

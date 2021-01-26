@@ -17,7 +17,6 @@ class InvoiceAddModelForm(forms.ModelForm):
             ),
             'employee': forms.TextInput(attrs={'class': 'form-control is-valid'}),
             'title': forms.TextInput(attrs={'class': 'form-control is-valid'}),
-            'purpose': forms.TextInput(attrs={'class': 'form-control is-valid'}),
             'filldate': forms.DateInput(attrs={'class': 'form-control is-valid', 'type': 'date'}),
             'request_unit': forms.Select(attrs={'class': 'custom-select'}),
             'pay_comp': forms.TextInput(attrs={'class': 'form-control is-valid'}),
@@ -34,7 +33,6 @@ class InvoiceUpdateModelForm(forms.ModelForm):
         widgets = {
             'employee': forms.TextInput(attrs={'class': 'form-control is-valid'}),
             'title': forms.TextInput(attrs={'class': 'form-control is-valid'}),
-            'purpose': forms.TextInput(attrs={'class': 'form-control is-valid'}),
             'filldate': forms.DateInput(attrs={'class': 'form-control is-valid', 'type': 'date'}),
             'request_unit': forms.Select(attrs={'class': 'custom-select'}),
             'pay_comp': forms.TextInput(attrs={'class': 'form-control is-valid'}),
@@ -52,6 +50,5 @@ class InvoiceItemAddModelForm(forms.ModelForm):
         widgets = {
             'invoice_sn': forms.NumberInput(),
             'item_name': forms.TextInput(attrs={'class': 'form-control is-valid'}),
-            'remark': forms.TextInput(attrs={'class': 'form-control is-valid'}),
             'amount': forms.NumberInput(attrs={'class': 'form-control is-valid'}),
         }
