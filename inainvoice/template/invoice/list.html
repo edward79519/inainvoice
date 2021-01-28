@@ -18,7 +18,7 @@
             <thead>
               <tr>
                 <th scope="col" width="15%">單號</th>
-                <th scope="col">標題</th>
+                <th scope="col" width="50%">標題</th>
                 <th scope="col">申請日期</th>
                 <th scope="col">申請人</th>
                 <th scope="col" width="10%">編輯</th>
@@ -29,7 +29,7 @@
               <tr>
                 <th scope="row">{{ invoice.serial_num }}</th>
                 <td><a href="{{ invoice.id }}">{{ invoice.title }}</a></td>
-                <td>{{ invoice.filldate }}</td>
+                <td>{{ invoice.filldate|date:"m月d日, Y年" }}</td>
                 <td>{{ invoice.employee }}</td>
                 <td>
                   {% if invoice.is_completed %}

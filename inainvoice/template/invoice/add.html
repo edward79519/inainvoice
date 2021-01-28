@@ -26,11 +26,11 @@
           </div>
         </div>
         <div class="form-row mb-3">
-          <div class=col-lg-6>
+          <div class=col-lg-7>
             <label for="{{ form.title.name }}">主旨</label>
             {{ form.title }}
           </div>
-          <div class=col-lg-3>
+          <div class=col-lg-2>
             <label for="{{ form.employee.name }}">請款人</label>
             {{ form.employee }}
           </div>
@@ -40,13 +40,17 @@
           </div>
         </div>
         <div class="form-row mb-3">
-          <div class="col-lg-6">
+          <div class="col-lg-5">
             <label for="{{ form.pay_comp.name }}">給付廠商</label>
             {{ form.pay_comp }}
           </div>
-          <div class="col-lg-3">
+          <div class="col-lg-2">
             <label for="{{ form.pay_methold.name }}">付款條件</label>
             {{ form.pay_methold }}
+          </div>
+          <div class="col-lg-2">
+            <label for="{{ form.pay_currency.name }}">付款幣別</label>
+            {{ form.pay_currency }}
           </div>
           <div class="col-lg-3">
             <label for="{{ form.pay_date.name }}">預計付款日期</label>

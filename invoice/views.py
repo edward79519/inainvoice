@@ -38,7 +38,7 @@ def invoice_detail(request, invoice_id):
     invoice = get_object_or_404(Invoice, pk=invoice_id)
     invoiceitem = InvoiceItem.objects.filter(invoice_sn=invoice_id)
     amount_sum = invoiceitem.aggregate(Sum('amount'))['amount__sum']
-    total_amount = format(amount_sum, ',') if amount_sum else 0
+    total_amount = amount_sum if amount_sum else 0
     form = InvoiceItemAddModelForm()
     if request.method == "POST":
         form = InvoiceItemAddModelForm(request.POST)
@@ -73,16 +73,9 @@ def invoice_update(request, invoice_id):
 @login_required
 def invoice_delete(request, invoice_id):
     invoice = Invoice.objects.get(pk=invoice_id)
-    template = loader.get_template('invoice/delete.html')
-
-    if request.method == "POST":
+    if not invoice.is_completed:
         invoice.delete()
-        return redirect("/invoice/")
-
-    context = {
-        'invoice': invoice,
-    }
-    return HttpResponse(template.render(context, request))
+    return redirect("/invoice/")
 
 @login_required
 def invoiveitem_delete(request, invoice_id, item_id):
@@ -95,3 +88,5 @@ def invoice_complete(request, invoice_id):
     invoice = Invoice.objects.filter(pk=invoice_id)
     invoice.update(is_completed=True)
     return redirect("/invoice/" + str(invoice_id) + "/")
+
+

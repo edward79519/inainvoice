@@ -23,6 +23,17 @@ class Invoice(models.Model):
         (CASH, '現金'),
     )
 
+    NTD = '新台幣'
+    USD = '美金'
+    EUR = '歐元'
+    RMB = '人民幣'
+    PAY_CURRENCY_CHOICE = (
+        (NTD, '新台幣'),
+        (USD, '美金'),
+        (EUR, '歐元'),
+        (RMB, '人民幣'),
+    )
+
     serial_num = models.CharField(max_length=15)
     employee = models.CharField(max_length=20)
     title = models.CharField(max_length=100)
@@ -38,6 +49,11 @@ class Invoice(models.Model):
         max_length=10,
         choices=PAY_METHOD_CHOICE,
         default=REMIT,
+    )
+    pay_currency = models.CharField(
+        max_length=10,
+        choices=PAY_CURRENCY_CHOICE,
+        default=NTD,
     )
     pay_date = models.DateField()
     is_approved = models.BooleanField(default=False)
@@ -56,6 +72,6 @@ class InvoiceItem(models.Model):
         on_delete=models.CASCADE,
     )
     item_name = models.CharField(max_length=100)
-    amount = models.DecimalField(max_digits=10, decimal_places=0)
+    amount = models.DecimalField(max_digits=12, decimal_places=2)
 
 

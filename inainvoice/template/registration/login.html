@@ -30,10 +30,10 @@
 
                 <div class="form-row">
                     <div class="col-md-12 mb-3">
-                        <label for="{{ form.username.name }}">{{ form.username.label_tag }}</label>
+                        <label for="{{ form.username.name }}">帳號：</label>
                         {{ form.username }}
                         <div class="invalid-feedback">
-                            Please enter a Username.
+                            請輸入帳號
                         </div>
                     </div>
                 </div>
@@ -41,10 +41,10 @@
 
                 <div class="form-row">
                     <div class="col-md-12 mb-3">
-                        <label for="{{ form.password.name }}">{{ form.password.label_tag }}</label>
+                        <label for="{{ form.password.name }}">密碼：</label>
                         {{ form.password }}
                         <div class="invalid-feedback">
-                            Please enter a Password.
+                            請輸入密碼
                         </div>
                     </div>
                 </div>
@@ -52,11 +52,10 @@
                 <div class="form-row">
                     <div class="col-md-12 mb-3">
                         <p>
-                            <input class="btn btn-primary" type="submit" value="LogIn">
-                            <a class="btn btn-secondary" href="#" role="button">SignUp</a>
+                            <input class="btn btn-primary" type="submit" value="登入">
+                            <!--<a class="btn btn-secondary" href="#" role="button">SignUp</a>-->
                             <input class="btn btn-outline-primary" type="hidden" name="next" value="{{ next }}">
                             {# Assumes you setup the password_reset view in your URLconf #}
-                            <a href="{% url 'password_reset' %}">Lost password?</a>
                         </p>
                     </div>
                 </div>

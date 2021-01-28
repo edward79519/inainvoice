@@ -21,6 +21,7 @@ class InvoiceAddModelForm(forms.ModelForm):
             'request_unit': forms.Select(attrs={'class': 'custom-select'}),
             'pay_comp': forms.TextInput(attrs={'class': 'form-control is-valid'}),
             'pay_methold': forms.Select(attrs={'class': 'custom-select'}),
+            'pay_currency': forms.Select(attrs={'class': 'custom-select'}),
             'pay_date': forms.DateInput(attrs={'class': 'form-control is-valid', 'type': 'date'}),
             'remark': forms.Textarea(attrs={'class': 'form-control is-valid'})
         }
@@ -37,6 +38,7 @@ class InvoiceUpdateModelForm(forms.ModelForm):
             'request_unit': forms.Select(attrs={'class': 'custom-select'}),
             'pay_comp': forms.TextInput(attrs={'class': 'form-control is-valid'}),
             'pay_methold': forms.Select(attrs={'class': 'custom-select'}),
+            'pay_currency': forms.Select(attrs={'class': 'custom-select'}),
             'pay_date': forms.DateInput(attrs={'class': 'form-control is-valid', 'type': 'date'}),
             'remark': forms.Textarea(attrs={'class': 'form-control is-valid'}),
         }

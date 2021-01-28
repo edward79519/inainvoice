@@ -11,18 +11,16 @@
             <div class="col-lg-10 mx-auto">
                 <h2>請款單 {{ invoice.serial_num}} - {{ invoice.title }}</h2>
                 <p class="d-print-none">{{ invoice.update_time|date:"Y年m月d日 H:i" }} 更新, {{ invoice.creat_time|date:"Y年m月d日 H:i" }} 建立</p>
-                {% if invoice.is_completed %}
-                <p><a href="javascript:window.print()" class="btn btn-outline-primary btn-sm d-print-none" role="button">列印</a></p>
-                {% endif %}
             </div>
         </div>
         <div class-="row">
             <div class="col-lg-10 mx-auto mb-3">
                 {% if not invoice.is_completed %}
                 <a href=" {% url 'InvoiceUpdate' invoice.id %} " class="btn btn-outline-primary btn-sm" role="button">編輯</a>
-                <a href=" {% url 'InvoiceDelete' invoice.id %} " class="btn btn-outline-danger btn-sm" role="button">刪除</a>
-                <!--<a href=" {% url 'InvoiceComplete' invoice.id %} " class="btn btn-outline-success btn-sm" role="button">編輯完成</a>-->
-                <a href=" {% url 'InvoiceComplete' invoice.id %} " class="btn btn-outline-success btn-sm" role="button" data-toggle="modal" data-target="#deleteModal">編輯完成</a>
+                <a href="" class="btn btn-outline-danger btn-sm" role="button" data-toggle="modal" data-target="#dltModal">刪除</a>
+                <a href="" class="btn btn-outline-success btn-sm" role="button" data-toggle="modal" data-target="#cmpltModal">編輯完成</a>
+                {% else %}
+                <p><a href="javascript:window.print()" class="btn btn-outline-info btn-sm d-print-none" role="button">列印</a></p>
                 {% endif %}
             </div>
         </div>
@@ -56,8 +54,8 @@
                             <th scope="row">總金額</th>
                             <td>
                                 <div class="row">
-                                        <div class="col-5">新台幣</div>
-                                        <div class="col-7 text-right">{{ total_amount }} 元整</div>
+
+                                        <div class="col-12">{{ invoice.pay_currency }}  {{ total_amount|moneycent }} 元整</div>
                                 </div>
                             </td>
                         </tr>
@@ -71,7 +69,7 @@
                             <td colspan="7">{{ item.item_name }}</td>
                             <td colspan="1">
                                 <div class="row">
-                                    <div class="col-3">NT.</div>
+                                    <div class="col-3">{{ invoice.pay_currency|crncte }}</div>
                                     <div class="col-9 text-right">{{ item.amount|moneycent }} 元</div>
                                 </div>
                             </td>
@@ -116,7 +114,7 @@
                                 <td>{{ item.item_name }}</td>
                                 <td>
                                     <div class="row">
-                                        <div class="col-3">NT.</div>
+                                        <div class="col-3">{{ invoice.pay_currency|crncte }}</div>
                                         <div class="col-9 text-right">{{ item.amount|moneycent }} 元</div>
                                     </div>
                                 </td>
@@ -144,7 +142,7 @@
                                     <td>
                                         <div class="input-group mb-3">
                                             <div class="input-group-prepend">
-                                                <span class="input-group-text">NT</span>
+                                                <span class="input-group-text">{{ invoice.pay_currency|crncte }}</span>
                                             </div>
                                             {{ form.amount }}
                                         </div>
@@ -164,6 +162,7 @@
             <div class="col">
                 <h3>簽核</h3>
                 <table class="table table-bordered text-center">
+                    <tbody>
                         <tr>
                             <th width="20%" colspan="3">董事長</th>
                             <th width="20%" colspan="3">總經理</th>
@@ -172,7 +171,13 @@
                             <th width="20%" colspan="3">經辦人</th>
                         </tr>
                         <tr>
-                            <td height="70" colspan="3"></td>
+                            <td height="70" colspan="3" style="vertical-align: middle;">
+                                {% if invoice.pay_currency == "新台幣" %}
+                                    {% if total_amount < 100000 %}
+                                    依權責辦法免簽
+                                    {% endif %}
+                                {% endif %}
+                            </td>
                             <td colspan="3"></td>
                             <td colspan="3"></td>
                             <td colspan="3"></td>
@@ -191,6 +196,7 @@
                             <td colspan="5"></td>
                             <td colspan="5"></td>
                         </tr>
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -198,11 +204,12 @@
 </section>
 
 <!-- Modal -->
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+<!--完成表單按鈕-->
+<div class="modal fade" id="cmpltModal" tabindex="-1" role="dialog" aria-labelledby="cmpltModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">確定完成表單？</h5>
+        <h5 class="modal-title" id="cmpltModalLabel">確定完成表單？</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -213,6 +220,27 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
         <button type="button" class="btn btn-success" onclick="location.href='{% url 'InvoiceComplete' invoice.id %}'">確定</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--刪除表單按鈕-->
+<div class="modal fade" id="dltModal" tabindex="-1" role="dialog" aria-labelledby="dltModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">確定刪除表單？</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <p>刪除後即無法繼續編輯表單，確定刪除？</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-danger" onclick="location.href='{% url 'InvoiceDelete' invoice.id %}'">確定刪除</button>
       </div>
     </div>
   </div>
