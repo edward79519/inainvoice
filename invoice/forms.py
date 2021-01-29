@@ -15,15 +15,15 @@ class InvoiceAddModelForm(forms.ModelForm):
                     'value': timezone.now().astimezone().strftime('%Y%m%d%H%M%S'),
                 }
             ),
-            'employee': forms.TextInput(attrs={'class': 'form-control is-valid'}),
-            'title': forms.TextInput(attrs={'class': 'form-control is-valid'}),
-            'filldate': forms.DateInput(attrs={'class': 'form-control is-valid', 'type': 'date'}),
+            'employee': forms.TextInput(attrs={'class': 'form-control', 'pattern': '\\S+.*'}),
+            'title': forms.TextInput(attrs={'class': 'form-control', 'pattern': '\\S+.*'}),
+            'filldate': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
             'request_unit': forms.Select(attrs={'class': 'custom-select'}),
-            'pay_comp': forms.TextInput(attrs={'class': 'form-control is-valid'}),
+            'pay_comp': forms.TextInput(attrs={'class': 'form-control', 'pattern': '\\S+.*'}),
             'pay_methold': forms.Select(attrs={'class': 'custom-select'}),
             'pay_currency': forms.Select(attrs={'class': 'custom-select'}),
-            'pay_date': forms.DateInput(attrs={'class': 'form-control is-valid', 'type': 'date'}),
-            'remark': forms.Textarea(attrs={'class': 'form-control is-valid'})
+            'pay_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'remark': forms.Textarea(attrs={'class': 'form-control'})
         }
 
 class InvoiceUpdateModelForm(forms.ModelForm):
@@ -32,15 +32,15 @@ class InvoiceUpdateModelForm(forms.ModelForm):
         model = Invoice
         exclude = ['serial_num', 'is_completed', 'is_approved', 'is_valid']
         widgets = {
-            'employee': forms.TextInput(attrs={'class': 'form-control is-valid'}),
-            'title': forms.TextInput(attrs={'class': 'form-control is-valid'}),
-            'filldate': forms.DateInput(attrs={'class': 'form-control is-valid', 'type': 'date'}),
+            'employee': forms.TextInput(attrs={'class': 'form-control', 'pattern': '\\S+.*'}),
+            'title': forms.TextInput(attrs={'class': 'form-control', 'pattern': '\\S+.*'}),
+            'filldate': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
             'request_unit': forms.Select(attrs={'class': 'custom-select'}),
-            'pay_comp': forms.TextInput(attrs={'class': 'form-control is-valid'}),
+            'pay_comp': forms.TextInput(attrs={'class': 'form-control', 'pattern': '\\S+.*'}),
             'pay_methold': forms.Select(attrs={'class': 'custom-select'}),
             'pay_currency': forms.Select(attrs={'class': 'custom-select'}),
-            'pay_date': forms.DateInput(attrs={'class': 'form-control is-valid', 'type': 'date'}),
-            'remark': forms.Textarea(attrs={'class': 'form-control is-valid'}),
+            'pay_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'remark': forms.Textarea(attrs={'class': 'form-control'}),
         }
 
 class InvoiceItemAddModelForm(forms.ModelForm):
@@ -50,6 +50,6 @@ class InvoiceItemAddModelForm(forms.ModelForm):
         fields = '__all__'
         widgets = {
             'invoice_sn': forms.NumberInput(),
-            'item_name': forms.TextInput(attrs={'class': 'form-control is-valid'}),
-            'amount': forms.NumberInput(attrs={'class': 'form-control is-valid'}),
+            'item_name': forms.TextInput(attrs={'class': 'form-control', 'pattern': '\\S+.*'}),
+            'amount': forms.NumberInput(attrs={'class': 'form-control'}),
         }

@@ -10,7 +10,7 @@
           <h2>編輯請款單 - {{ invoice.serial_num }}</h2>
         </div>
       </div>
-      <form class="was-validated" action="" method="POST">
+      <form class="needs-validation" action="" method="POST" novalidate>
         {% csrf_token %}
         <div class="form-row mb-3">
           <div class="col-lg-4">

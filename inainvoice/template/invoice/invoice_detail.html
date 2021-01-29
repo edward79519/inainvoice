@@ -134,7 +134,7 @@
                     <tfoot>
                     {% if user.is_authenticated %}
                     {% if not invoice.is_completed %}
-                            <form class="was-validated" action="" method="POST">
+                            <form class="needs-validation" action="" method="POST" novalidate>
                             {% csrf_token %}
                                 <tr>
                                     <input type="hidden" value="{{ invoice.id }}" name="invoice_sn" id="id_invoice_sn">
