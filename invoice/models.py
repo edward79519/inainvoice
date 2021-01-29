@@ -37,9 +37,7 @@ class Invoice(models.Model):
     serial_num = models.CharField(max_length=15)
     employee = models.CharField(max_length=20)
     title = models.CharField(max_length=100)
-    filldate = models.DateField(
-        default=timezone.now()
-    )
+    filldate = models.DateField()
     request_unit = models.ForeignKey(
         'RequestUnit',
         on_delete=models.PROTECT,

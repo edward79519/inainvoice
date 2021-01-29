@@ -17,7 +17,13 @@ class InvoiceAddModelForm(forms.ModelForm):
             ),
             'employee': forms.TextInput(attrs={'class': 'form-control', 'pattern': '\\S+.*'}),
             'title': forms.TextInput(attrs={'class': 'form-control', 'pattern': '\\S+.*'}),
-            'filldate': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'filldate': forms.DateInput(
+                attrs={
+                    'class': 'form-control',
+                    'type': 'date',
+                    'value': timezone.now().astimezone().strftime('%Y-%m-%d'),
+                }
+            ),
             'request_unit': forms.Select(attrs={'class': 'custom-select'}),
             'pay_comp': forms.TextInput(attrs={'class': 'form-control', 'pattern': '\\S+.*'}),
             'pay_methold': forms.Select(attrs={'class': 'custom-select'}),
